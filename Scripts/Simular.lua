@@ -37,7 +37,7 @@ local function createEmblem()
     -- Função para executar o script remoto
     local function executarScript()
         -- Substitua a URL pelo script que você quer carregar
-        local scriptUrl = "https://raw.githubusercontent.com/AdrainRazini/mastermod/refs/heads/main/Mastermodv2"
+        local scriptUrl = "https://mod-menu-server.onrender.com/scripts/Menu.lua"
         -- Executa o script remoto
         loadstring(game:HttpGet(scriptUrl))()
     end
