@@ -12,7 +12,7 @@ const scriptsDir = path.join(__dirname, "Scripts");
 // Rota para a página inicial
 app.get("/", (req, res) => {
     res.send(`local guiName = "ScriptsCentralGUI"
-local apiUrl = "https://2df04130-10d1-40a7-a1d0-c038ed93694c-00-1936r9hlcnyai.spock.replit.dev/scripts"
+local apiUrl = "https://mod-menu-server.onrender.com/scripts"
 
 if identifyexecutor then
     if game:GetService("CoreGui"):FindFirstChild(guiName) then
