@@ -1,69 +1,86 @@
--- Simulação de emblema ganho com imagem do personagem e texto personalizado
-
--- Configurações do jogador
 local player = game.Players.LocalPlayer
-local userId = 1393562880 -- ID para carregar a imagem
-local nickname = "Adrian" -- Exibindo apenas o nome
+local gui
 
--- Criando a interface de usuário
-local gui = Instance.new("ScreenGui")
-local frame = Instance.new("Frame")
-local textLabel = Instance.new("TextLabel")
-local playerImage = Instance.new("ImageLabel")
+-- Função para criar o GUI do emblema
+local function createEmblem()
+    -- Cria o ScreenGui
+    gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 
--- Configurando o GUI
-gui.Name = "BadgeEffect"
-gui.Parent = player:WaitForChild("PlayerGui")
+    -- Cria o Frame do emblema
+    local frame = Instance.new("Frame", gui)
+    frame.Size = UDim2.new(0, 400, 0, 150)
+    frame.Position = UDim2.new(0.5, -200, 0.5, -75)
+    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    frame.BackgroundTransparency = 0.3
+    frame.BorderSizePixel = 0
 
-frame.Name = "BadgeFrame"
-frame.Parent = gui
-frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Fundo preto
-frame.BackgroundTransparency = 0.3
-frame.Size = UDim2.new(0.3, 0, 0.15, 0) -- Ajustado para comportar a imagem
-frame.Position = UDim2.new(0.7, 0, 0.9, 0) -- Posição no canto inferior direito
-frame.AnchorPoint = Vector2.new(0, 1) -- Alinha no canto inferior
+    -- Cria o ImageLabel (imagem do jogador)
+    local imageLabel = Instance.new("ImageLabel", frame)
+    imageLabel.Size = UDim2.new(0, 100, 0, 100)
+    imageLabel.Position = UDim2.new(0.05, 0, 0.2, 0)
+    imageLabel.BackgroundTransparency = 1
+    imageLabel.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=1393562880&width=420&height=420&format=png"
 
--- Configurando a imagem do personagem
-playerImage.Name = "PlayerImage"
-playerImage.Parent = frame
-playerImage.Size = UDim2.new(0.3, 0, 0.8, 0) -- Ajusta o tamanho
-playerImage.Position = UDim2.new(0.05, 0, 0.1, 0) -- Margem interna
-playerImage.BackgroundTransparency = 1
-playerImage.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=420&height=420&format=png"
+    -- Adiciona texto
+    local textLabel = Instance.new("TextLabel", frame)
+    textLabel.Size = UDim2.new(0.7, 0, 1, 0)
+    textLabel.Position = UDim2.new(0.3, 0, 0, 0)
+    textLabel.Text = "🎉 Script Executado! 🎉\nAdrianRazini"
+    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextScaled = true
+    textLabel.TextStrokeTransparency = 0.5
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextXAlignment = Enum.TextXAlignment.Left
+    textLabel.TextYAlignment = Enum.TextYAlignment.Center
 
--- Configurando o texto
-textLabel.Name = "BadgeText"
-textLabel.Parent = frame
-textLabel.Text = "🎉 Script executado! 🎉\nNick: " .. nickname
-textLabel.Font = Enum.Font.SourceSansBold
-textLabel.TextSize = 18
-textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Texto branco
-textLabel.BackgroundTransparency = 1
-textLabel.TextXAlignment = Enum.TextXAlignment.Left
-textLabel.TextYAlignment = Enum.TextYAlignment.Center
-textLabel.Size = UDim2.new(0.65, 0, 1, 0) -- Ajustado para texto ao lado da imagem
-textLabel.Position = UDim2.new(0.35, 0, 0, 0)
-
--- Efeito de aparecimento e desaparecimento
-frame.Visible = false
-
-local function showBadgeEffect()
-    frame.Visible = true
-    for i = 0, 1, 0.05 do
-        frame.BackgroundTransparency = i
-        textLabel.TextTransparency = i
-        playerImage.ImageTransparency = i
-        wait(0.05)
+    -- Função para executar o script remoto
+    local function executarScript()
+        -- Substitua a URL pelo script que você quer carregar
+        local scriptUrl = "https://raw.githubusercontent.com/AdrainRazini/mastermod/refs/heads/main/Mastermodv2"
+        -- Executa o script remoto
+        loadstring(game:HttpGet(scriptUrl))()
     end
-    wait(2) -- Duração do efeito
-    for i = 1, 0, -0.05 do
-        frame.BackgroundTransparency = i
-        textLabel.TextTransparency = i
-        playerImage.ImageTransparency = i
-        wait(0.05)
-    end
+
+    -- Animação de aparecimento e desaparecimento do emblema
     frame.Visible = false
+    local function showEmblem()
+        frame.Visible = true
+        for i = 0, 1, 0.05 do
+            frame.BackgroundTransparency = i
+            textLabel.TextTransparency = i
+            imageLabel.ImageTransparency = i
+            wait(0.05)
+        end
+        wait(2) -- Duração do emblema visível
+        for i = 1, 0, -0.05 do
+            frame.BackgroundTransparency = i
+            textLabel.TextTransparency = i
+            imageLabel.ImageTransparency = i
+            wait(0.05)
+        end
+        frame.Visible = false
+
+        -- Executa o script remoto após o desaparecimento do emblema
+        executarScript()
+
+        -- Destroi o GUI
+        gui:Destroy()
+    end
+
+    -- Mostra o emblema
+    showEmblem()
 end
 
--- Simula o efeito visual ao rodar o script
-showBadgeEffect()
+-- Recriar GUI do emblema ao respawn do jogador
+player.CharacterAdded:Connect(function()
+    -- Se houver uma GUI anterior, destrua-a
+    if gui then
+        gui:Destroy()
+    end
+    -- Cria um novo emblema
+    createEmblem()
+end)
+
+-- Cria o emblema inicialmente
+createEmblem()
