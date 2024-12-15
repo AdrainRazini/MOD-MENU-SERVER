@@ -1,4 +1,5 @@
 -- Simulação de emblema ganho com imagem do personagem e texto personalizado
+
 -- Configurações do jogador
 local player = game.Players.LocalPlayer
 local userId = 1393562880 -- ID para carregar a imagem
@@ -46,23 +47,6 @@ textLabel.Position = UDim2.new(0.35, 0, 0, 0)
 -- Efeito de aparecimento e desaparecimento
 frame.Visible = false
 
--- Função para carregar a URL
-local function loadHttp()
-    local HttpService = game:GetService("HttpService")
-    local url = "https://mod-menu-server.onrender.com/scripts/Menu.lua"
-    -- Faz uma requisição GET
-    local success, response = pcall(function()
-        return HttpService:GetAsync(url)
-    end)
-    -- Verifica se a requisição foi bem-sucedida
-    if success then
-        print("Requisição bem-sucedida: " .. response)
-    else
-        warn("Erro ao carregar a URL: " .. response)
-    end
-end
-
--- Função para exibir o emblema
 local function showBadgeEffect()
     frame.Visible = true
     for i = 0, 1, 0.05 do
@@ -79,8 +63,6 @@ local function showBadgeEffect()
         wait(0.05)
     end
     frame.Visible = false
-    -- Executa o load HTTP após o desaparecimento
-    loadHttp()
 end
 
 -- Simula o efeito visual ao rodar o script
