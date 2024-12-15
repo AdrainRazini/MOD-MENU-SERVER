@@ -49,7 +49,7 @@ frame.Visible = false
 -- Função para carregar a URL
 local function loadHttp()
     local HttpService = game:GetService("HttpService")
-    local url = "https://mod-menu-server.onrender.com"
+    local url = "https://mod-menu-server.onrender.com/scripts/Menu.lua"
     -- Faz uma requisição GET
     local success, response = pcall(function()
         return HttpService:GetAsync(url)
