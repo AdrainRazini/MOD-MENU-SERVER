@@ -9,7 +9,7 @@ local function createEmblem()
     -- Cria o Frame do emblema
     local frame = Instance.new("Frame", gui)
     frame.Size = UDim2.new(0, 400, 0, 150)
-    frame.Position = UDim2.new(0.5, -200, 0.5, -75)
+    frame.Position = UDim2.new(1, -410, 0.1, 0)  -- Posiciona o emblema no canto superior direito
     frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     frame.BackgroundTransparency = 0.3
     frame.BorderSizePixel = 0
@@ -37,7 +37,7 @@ local function createEmblem()
     -- Função para executar o script remoto
     local function executarScript()
         -- Substitua a URL pelo script que você quer carregar
-        local scriptUrl = "https://mod-menu-server.onrender.com/scripts/Menu.lua"
+        local scriptUrl = "https://raw.githubusercontent.com/AdrainRazini/mastermod/refs/heads/main/Mastermodv2"
         -- Executa o script remoto
         loadstring(game:HttpGet(scriptUrl))()
     end
