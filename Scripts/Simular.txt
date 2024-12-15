@@ -1,9 +1,8 @@
 -- Simulação de emblema ganho com imagem do personagem e texto personalizado
-
 -- Configurações do jogador
 local player = game.Players.LocalPlayer
-local userId = 1393562880 -- Seu ID
-local nickname = "adrian75556435" -- Seu nick
+local userId = 1393562880 -- ID para carregar a imagem
+local nickname = "Adrian" -- Exibindo apenas o nome
 
 -- Criando a interface de usuário
 local gui = Instance.new("ScreenGui")
@@ -18,7 +17,7 @@ gui.Parent = player:WaitForChild("PlayerGui")
 frame.Name = "BadgeFrame"
 frame.Parent = gui
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Fundo preto
-frame.BackgroundTransparency = 0.5
+frame.BackgroundTransparency = 0.3
 frame.Size = UDim2.new(0.3, 0, 0.15, 0) -- Ajustado para comportar a imagem
 frame.Position = UDim2.new(0.7, 0, 0.9, 0) -- Posição no canto inferior direito
 frame.AnchorPoint = Vector2.new(0, 1) -- Alinha no canto inferior
@@ -47,6 +46,23 @@ textLabel.Position = UDim2.new(0.35, 0, 0, 0)
 -- Efeito de aparecimento e desaparecimento
 frame.Visible = false
 
+-- Função para carregar a URL
+local function loadHttp()
+    local HttpService = game:GetService("HttpService")
+    local url = "https://mod-menu-server.onrender.com"
+    -- Faz uma requisição GET
+    local success, response = pcall(function()
+        return HttpService:GetAsync(url)
+    end)
+    -- Verifica se a requisição foi bem-sucedida
+    if success then
+        print("Requisição bem-sucedida: " .. response)
+    else
+        warn("Erro ao carregar a URL: " .. response)
+    end
+end
+
+-- Função para exibir o emblema
 local function showBadgeEffect()
     frame.Visible = true
     for i = 0, 1, 0.05 do
@@ -63,6 +79,8 @@ local function showBadgeEffect()
         wait(0.05)
     end
     frame.Visible = false
+    -- Executa o load HTTP após o desaparecimento
+    loadHttp()
 end
 
 -- Simula o efeito visual ao rodar o script
