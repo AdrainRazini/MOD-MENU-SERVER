@@ -1,4 +1,4 @@
--- Simulação de emblema ganho (apenas visual)
+-- Simulação de emblema ganho (visual no canto inferior direito)
 
 -- Criando a interface de usuário
 local player = game.Players.LocalPlayer
@@ -12,17 +12,18 @@ gui.Parent = player:WaitForChild("PlayerGui")
 
 frame.Name = "BadgeFrame"
 frame.Parent = gui
-frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Fundo preto
 frame.BackgroundTransparency = 0.5
-frame.Size = UDim2.new(0.4, 0, 0.2, 0)
-frame.Position = UDim2.new(0.3, 0, 0.4, 0)
+frame.Size = UDim2.new(0.3, 0, 0.1, 0) -- Tamanho ajustado
+frame.Position = UDim2.new(0.7, 0, 0.9, 0) -- Posição no canto inferior direito
+frame.AnchorPoint = Vector2.new(0, 1) -- Alinha no canto inferior
 
 textLabel.Name = "BadgeText"
 textLabel.Parent = frame
-textLabel.Text = "🎉 Parabéns! Você ganhou um emblema! 🎉"
+textLabel.Text = "🎉 Você ganhou um emblema! 🎉"
 textLabel.Font = Enum.Font.SourceSansBold
-textLabel.TextSize = 24
-textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.TextSize = 20
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Texto branco
 textLabel.BackgroundTransparency = 1
 textLabel.Size = UDim2.new(1, 0, 1, 0)
 
