@@ -34,7 +34,7 @@ playerImage.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" ..
 -- Configurando o texto
 textLabel.Name = "BadgeText"
 textLabel.Parent = frame
-textLabel.Text = "🎉 Script executado! 🎉\nID: " .. "\nNick: " .. nickname
+textLabel.Text = "🎉 Script executado! 🎉\nNick: " .. nickname
 textLabel.Font = Enum.Font.SourceSansBold
 textLabel.TextSize = 18
 textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Texto branco
