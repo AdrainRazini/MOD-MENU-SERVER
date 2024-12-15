@@ -2,8 +2,8 @@
 
 -- Configurações do jogador
 local player = game.Players.LocalPlayer
-local userId = 1393562880 -- ID para carregar a imagem
-local nickname = "Adrian" -- Exibindo apenas o nome
+local userId = 1393562880 -- Seu ID
+local nickname = "adrian75556435" -- Seu nick
 
 -- Criando a interface de usuário
 local gui = Instance.new("ScreenGui")
@@ -18,7 +18,7 @@ gui.Parent = player:WaitForChild("PlayerGui")
 frame.Name = "BadgeFrame"
 frame.Parent = gui
 frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Fundo preto
-frame.BackgroundTransparency = 0.3
+frame.BackgroundTransparency = 0.5
 frame.Size = UDim2.new(0.3, 0, 0.15, 0) -- Ajustado para comportar a imagem
 frame.Position = UDim2.new(0.7, 0, 0.9, 0) -- Posição no canto inferior direito
 frame.AnchorPoint = Vector2.new(0, 1) -- Alinha no canto inferior
