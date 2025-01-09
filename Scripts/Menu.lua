@@ -9,43 +9,57 @@ if identifyexecutor then
     local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
     ScreenGui.Name = guiName
 
-    local Frame = Instance.new("Frame", ScreenGui)
-    Frame.Size = UDim2.new(0, 400, 0, 300)
-    Frame.Position = UDim2.new(0.5, -200, 0.5, -150) -- Centro inicial
-    Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    Frame.BorderSizePixel = 0
-    Frame.ClipsDescendants = true
+    local MainFrame = Instance.new("Frame", ScreenGui)
+    MainFrame.Size = UDim2.new(0, 500, 0, 300)
+    MainFrame.Position = UDim2.new(0.5, -250, 0.5, -150) -- Centralizado
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.ClipsDescendants = true
 
-    local TopBar = Instance.new("Frame", Frame)
-    TopBar.Size = UDim2.new(1, 0, 0, 30)
-    TopBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    TopBar.Active = true
+    local SideBar = Instance.new("Frame", MainFrame)
+    SideBar.Size = UDim2.new(0, 100, 1, 0)
+    SideBar.Position = UDim2.new(0, 0, 0, 0)
+    SideBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 
-    local Title = Instance.new("TextLabel", TopBar)
-    Title.Size = UDim2.new(1, -90, 1, 0)
-    Title.Position = UDim2.new(0, 5, 0, 0)
-    Title.Text = "Central de Scripts"
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.BackgroundTransparency = 1
-    Title.TextXAlignment = Enum.TextXAlignment.Left
+    local ContentFrame = Instance.new("Frame", MainFrame)
+    ContentFrame.Size = UDim2.new(1, -100, 1, 0)
+    ContentFrame.Position = UDim2.new(0, 100, 0, 0)
+    ContentFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 
-    local MinimizeButton = Instance.new("TextButton", TopBar)
-    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
-    MinimizeButton.Text = "-"
-    MinimizeButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    -- Botões da barra lateral
+    local function createSideButton(name, order)
+        local Button = Instance.new("TextButton", SideBar)
+        Button.Size = UDim2.new(1, 0, 0, 50)
+        Button.Position = UDim2.new(0, 0, 0, (order - 1) * 50)
+        Button.Text = name
+        Button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        return Button
+    end
 
-    local CloseButton = Instance.new("TextButton", TopBar)
-    CloseButton.Size = UDim2.new(0, 30, 0, 30)
-    CloseButton.Position = UDim2.new(1, -30, 0, 0)
-    CloseButton.Text = "X"
-    CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    local ScriptsButton = createSideButton("Scripts", 1)
+    local ConfigButton = createSideButton("Configurações", 2)
+    local CreditButton = createSideButton("Créditos", 3)
 
-    local ScrollingFrame = Instance.new("ScrollingFrame", Frame)
-    ScrollingFrame.Size = UDim2.new(1, 0, 1, -30)
-    ScrollingFrame.Position = UDim2.new(0, 0, 0, 30)
+    -- Seções do conteúdo
+    local ScriptsFrame = Instance.new("Frame", ContentFrame)
+    ScriptsFrame.Size = UDim2.new(1, 0, 1, 0)
+    ScriptsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    ScriptsFrame.Visible = true
+
+    local ConfigFrame = Instance.new("Frame", ContentFrame)
+    ConfigFrame.Size = UDim2.new(1, 0, 1, 0)
+    ConfigFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    ConfigFrame.Visible = false
+
+    local CreditFrame = Instance.new("Frame", ContentFrame)
+    CreditFrame.Size = UDim2.new(1, 0, 1, 0)
+    CreditFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    CreditFrame.Visible = false
+
+    -- Conteúdo da seção Scripts
+    local ScrollingFrame = Instance.new("ScrollingFrame", ScriptsFrame)
+    ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
     ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
     ScrollingFrame.ScrollBarThickness = 5
     ScrollingFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -66,14 +80,11 @@ if identifyexecutor then
 
         Button.MouseButton1Click:Connect(function()
             if activeScripts[scriptName] then
-                -- Desativar o script
                 activeScripts[scriptName] = false
                 Button.Text = "Ativar: " .. scriptName
                 Button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
                 print("Script desativado:", scriptName)
-                -- Adicione a lógica para desativar o script aqui, se necessário.
             else
-                -- Ativar o script
                 activeScripts[scriptName] = true
                 Button.Text = "Desativar: " .. scriptName
                 Button.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
@@ -105,60 +116,23 @@ if identifyexecutor then
         warn("Erro ao buscar os scripts:", response)
     end
 
-    local isMinimized = false
-    MinimizeButton.MouseButton1Click:Connect(function()
-        if isMinimized then
-            Frame.Size = UDim2.new(0, 400, 0, 300)
-            MinimizeButton.Text = "-"
-        else
-            Frame.Size = UDim2.new(0, 400, 0, 30)
-            MinimizeButton.Text = "+"
-        end
-        isMinimized = not isMinimized
+    -- Navegação entre as seções
+    ScriptsButton.MouseButton1Click:Connect(function()
+        ScriptsFrame.Visible = true
+        ConfigFrame.Visible = false
+        CreditFrame.Visible = false
     end)
 
-    CloseButton.MouseButton1Click:Connect(function()
-        ScreenGui:Destroy()
+    ConfigButton.MouseButton1Click:Connect(function()
+        ScriptsFrame.Visible = false
+        ConfigFrame.Visible = true
+        CreditFrame.Visible = false
     end)
 
-    -- Movimentação completa da GUI
-    local dragging = false
-    local dragInput, dragStart, startPos
-
-    local function update(input)
-        local delta = input.Position - dragStart
-        Frame.Position = UDim2.new(
-            startPos.X.Scale,
-            startPos.X.Offset + delta.X,
-            startPos.Y.Scale,
-            startPos.Y.Offset + delta.Y
-        )
-    end
-
-    TopBar.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = Frame.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    TopBar.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
+    CreditButton.MouseButton1Click:Connect(function()
+        ScriptsFrame.Visible = false
+        ConfigFrame.Visible = false
+        CreditFrame.Visible = true
     end)
 else
     print("Este script deve ser executado em um executor externo.")
