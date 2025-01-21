@@ -14,6 +14,12 @@ app.get("/", (req, res) => {
     res.send(`local guiName = "ScriptsCentralGUI"
 local apiUrl = "https://mod-menu-server.onrender.com/scripts"
 
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+    Title = "Central";
+    Text = "Adrian75556435";
+    Icon = "rbxthumb://type=Asset&id=93638563594123&w=150&h=150"})
+Duration = 16;
+
 if identifyexecutor then
     if game:GetService("CoreGui"):FindFirstChild(guiName) then
         return
