@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -9,9 +8,12 @@ const PORT = 3000;
 // Diretório dos scripts
 const scriptsDir = path.join(__dirname, "Scripts");
 
+// Servindo arquivos estáticos (como o index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Rota para a página inicial
 app.get("/", (req, res) => {
-    res.send(``);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Rota para listar os scripts
