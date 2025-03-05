@@ -5,10 +5,10 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// Diretório dos scripts
-const scriptsDir = path.join(__dirname, "Scripts");
+// Diretório dos scripts (agora dentro da pasta 'public')
+const scriptsDir = path.join(__dirname, "public", "Scripts");
 
-// Servindo arquivos estáticos (como o index.html)
+// Servindo arquivos estáticos (como o index.html e os scripts dentro de public)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rota para a página inicial
