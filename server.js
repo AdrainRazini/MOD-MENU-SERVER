@@ -1,4 +1,3 @@
-
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -6,10 +5,12 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+// Servir arquivos estáticos da pasta public
+app.use(express.static(path.join(__dirname, "public")));
+
 // Diretório dos scripts
 const scriptsDir = path.join(__dirname, "Scripts");
 
-// Rota para a página inicial
 app.get("/", (req, res) => {
     res.send(`local guiName = "ScriptsCentralGUI"
 local apiUrl = "https://mod-menu-server.onrender.com/scripts"
@@ -184,6 +185,11 @@ else
 end`);
 });
 
+// Rota para a página inicial
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 // Rota para listar os scripts
 app.get("/scripts", (req, res) => {
     fs.readdir(scriptsDir, (err, files) => {
@@ -209,6 +215,7 @@ app.get("/scripts/:name", (req, res) => {
     res.type("text/plain").send(content);
 });
 
+// Iniciar o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
